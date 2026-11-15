@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NUO · Podcast Shorts Factory</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'neon-lime': '#c3ff00',
+            'metallic-silver': '#cfd4db',
+          },
+          fontFamily: {
+            heading: ['Orbitron', 'sans-serif'],
+            sans: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Exact metallic gradient background matching the concept UI */
+    body {
+      background: radial-gradient(circle at 60% 40%, #eef1f5 0%, #d8dce3 40%, #adb4c0 100%);
+      color: #0b0c0e;
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Fluid Chrome Overlay Effects */
+    .chrome-blob-top {
+      position: absolute;
+      top: -100px;
+      left: 5%;
+      width: 500px;
+      height: 300px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(180,186,196,0.6) 50%, rgba(255,255,255,0.8) 100%);
+      filter: blur(40px);
+      border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .chrome-blob-bottom {
+      position: absolute;
+      bottom: -50px;
+      right: -50px;
+      width: 750px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(150,158,171,0.7) 40%, rgba(80,88,100,0.8) 100%);
+      filter: blur(30px);
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      pointer-events: none;
+    }
+
+    /* Technical Reticle / Crosshair Marks */
+    .crosshair {
+      position: relative;
+    }
+    .crosshair::before, .crosshair::after {
+      content: '';
+      position: absolute;
+      background-color: #717885;
+    }
+    .crosshair::before { width: 14px; height: 1px; top: 50%; left: -7px; }
+    .crosshair::after { width: 1px; height: 14px; left: 50%; top: -7px; }
+
+    /* Panel visibility mechanics */
+    .panel {
+      display: none;
+    }
+    .panel.active {
+      display: block;
+    }
+
+    /* Tab active styles */
+    .tab.active {
+      color: #000;
+      font-weight: 700;
+    }
+    .tab.active::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: #000;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+
+    /* Custom Input and Card Styling */
+    .cyber-card {
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .cyber-input, .cyber-select {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 0.75rem;
+      padding: 0.75rem 1rem;
+      color: #000;
+      font-weight: 600;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .cyber-input:focus, .cyber-select:focus {
+      border-color: #000;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: rgba(0, 0, 0, 0.08);
+      color: #000;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    /* Heartbeat note under the Logs heading — shown while a silent
+       (no-log-output) stage like transcription or rendering is running */
+    #heartbeat {
+      font-style: italic;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-6 md:p-12 relative selection:bg-neon-lime">
+
+  <div class="chrome-blob-top"></div>
+  <div class="chrome-blob-bottom"></div>
+
+  <div class="crosshair absolute top-24 left-10"></div>
+  <div class="crosshair absolute top-1/2 left-1/2"></div>
+  <div class="crosshair absolute bottom-24 left-1/3"></div>
+
+  <div class="app relative z-20 flex flex-col min-h-[90vh] justify-between">
+    
+    <nav class="top-nav flex items-center justify-between border-b border-black/10 pb-5">
+      <div class="logo font-heading text-2xl font-black tracking-wider text-black">
+        NUO<span class="text-xs align-super font-sans">®</span>
+      </div>
+
+      <div class="nav-tabs flex items-center gap-8 text-xs font-bold uppercase tracking-widest text-black/80" id="tabs">
+        <button class="tab active transition-colors flex items-center" data-tab="setup">Setup</button>
+        <button class="tab transition-colors flex items-center" data-tab="dashboard">Dashboard</button>
+        <button class="tab transition-colors flex items-center" data-tab="history">History</button>
+      </div>
+
+      <button class="nav-join bg-black text-white text-xs font-bold uppercase tracking-widest px-7 py-3 rounded-full hover:bg-neon-lime hover:text-black transition-all duration-300" onclick="alert('Join the community!')">
+        JOIN US ↗
+      </button>
+    </nav>
+
+    <div class="hero grid grid-cols-1 lg:grid-cols-12 gap-8 my-8 items-center">
+      <div class="lg:col-span-8 space-y-6">
+        <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-black/80">
+          <span class="w-2 h-2 bg-black rounded-full"></span>
+          AI-POWERED CONTENT AUTOMATION
+        </div>
+
+        <h1 class="font-heading text-5xl sm:text-7xl xl:text-8xl font-black tracking-tight leading-none text-black uppercase">
+          TURN PODCASTS INTO CLIPS<br />WITH 10 AI AGENTS
+        </h1>
+
+        <div class="sub text-lg font-bold uppercase tracking-tight text-black/80">
+          Automate editing, scheduling, and uploading — all from one dashboard.
+        </div>
+
+        <button class="orbit-btn group inline-flex items-center bg-black/10 backdrop-blur-md hover:bg-black rounded-full p-1.5 pr-6 border border-white/50 transition-all duration-300 cursor-pointer" onclick="document.querySelector('.tab[data-tab=\'dashboard\']').click();">
+          <span class="w-11 h-11 rounded-full bg-neon-lime flex items-center justify-center text-black font-bold text-xl group-hover:rotate-45 transition-transform duration-300">
+            →
+          </span>
+          <span class="ml-4 text-xs font-bold uppercase tracking-widest text-black group-hover:text-white transition-colors">
+            GENERATE CLIPS
+          </span>
+        </button>
+      </div>
+
+      <div class="lg:col-span-4 flex justify-end">
+        <div class="stats grid grid-cols-1 gap-4 w-full sm:w-64">
+          <div class="stat-item cyber-card p-4 rounded-2xl flex items-center justify-between">
+            <span class="number font-heading text-3xl font-black text-black">50K+</span>
+            <div class="label text-xs font-bold uppercase tracking-widest text-black/60">Clips Made</div>
+          </div>
+          <div class="stat-item cyber-card p-4 rounded-2xl flex items-center justify-between">
+            <span class="number font-heading text-3xl font-black text-black">10+</span>
+            <div class="label text-xs font-bold uppercase tracking-widest text-black/60">AI Agents</div>
+          </div>
+          <div class="stat-item cyber-card p-4 rounded-2xl flex items-center justify-between">
+            <span class="number font-heading text-3xl font-black text-black">24/7</span>
+            <div class="label text-xs font-bold uppercase tracking-widest text-black/60">Automation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panels my-6">
+      
+      <section id="setup" class="panel active space-y-6">
+        <div class="card cyber-card p-6 md:p-8 space-y-4">
+          <h2 class="font-heading text-xl font-bold uppercase text-black">AI Provider</h2>
+          <p class="hint text-xs font-semibold text-black/60">Pick which provider runs the agents, then paste its key. Only one is required.</p>
+          
+          <div class="row flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
+            <label class="text-xs font-bold uppercase tracking-widest w-32">Provider</label>
+            <select id="provider" class="cyber-select flex-1">
+              <option value="anthropic">Anthropic (Claude)</option>
+              <option value="openrouter">OpenRouter</option>
+              <option value="groq">Groq</option>
+              <option value="nvidia">NVIDIA</option>
+              <option value="gemini">Gemini</option>
+              <option value="openai">OpenAI-compatible</option>
+              <option value="ollama">Ollama (local, no key)</option>
+            </select>
+          </div>
+          <div id="key-fields" class="space-y-3 pt-2"></div>
+        </div>
+
+        <div class="card cyber-card p-6 md:p-8 space-y-4">
+          <h2 class="font-heading text-xl font-bold uppercase text-black">YouTube</h2>
+          <p class="hint text-xs font-semibold text-black/60">Upload the <code class="bg-black/10 px-1.5 py-0.5 rounded text-black font-mono">client_secret.json</code> from Google Cloud Console, then connect your channel.</p>
+          
+          <div class="row flex flex-col sm:flex-row sm:items-center gap-4">
+            <label class="text-xs font-bold uppercase tracking-widest w-32">client_secret.json</label>
+            <input type="file" id="yt-file" accept="application/json" class="cyber-input flex-1 text-xs" />
+          </div>
+
+          <div class="row status-row flex items-center gap-3 pt-2">
+            <span id="yt-secret-status" class="badge">not uploaded</span>
+            <span id="yt-connect-status" class="badge">not connected</span>
+          </div>
+
+          <div class="row flex items-center gap-4 pt-2">
+            <button id="yt-connect" class="btn bg-black text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-neon-lime hover:text-black transition-all">Connect YouTube</button>
+            <button id="yt-disconnect" class="btn ghost bg-transparent border border-black/20 text-black text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-black hover:text-white transition-all">Disconnect</button>
+          </div>
+          <p class="hint text-xs font-medium text-black/50 pt-2">Connecting opens a Google sign-in window on this computer — that's expected, this app runs locally.</p>
+        </div>
+
+        <div class="row flex items-center gap-4 pt-2">
+          <button id="save-credentials" class="btn primary bg-neon-lime text-black border border-black/20 font-bold text-xs uppercase tracking-widest px-8 py-3.5 rounded-full hover:bg-black hover:text-white transition-all">Save credentials</button>
+          <span id="save-msg" class="msg text-xs font-bold text-black/80"></span>
+        </div>
+      </section>
+
+      <section id="dashboard" class="panel space-y-6">
+        <div class="card cyber-card p-6 md:p-8 space-y-4">
+          <h2 class="font-heading text-xl font-bold uppercase text-black">Run pipeline</h2>
+          <div class="row">
+            <input id="run-url" type="text" placeholder="https://www.youtube.com/watch?v=..." class="cyber-input w-full" />
+          </div>
+          <div class="row pt-2">
+            <label class="checkbox flex items-center gap-2 text-xs font-bold uppercase tracking-wider cursor-pointer">
+              <input type="checkbox" id="run-autoyes" checked class="accent-black w-4 h-4" /> Auto-approve top clips &amp; post
+            </label>
+          </div>
+          <div class="row flex items-center gap-4 pt-2">
+            <button id="run-btn" class="btn primary bg-black text-white text-xs font-bold uppercase tracking-widest px-8 py-3.5 rounded-full hover:bg-neon-lime hover:text-black transition-all">Run</button>
+            <span id="run-status" class="badge">idle</span>
+          </div>
+        </div>
+
+        <div class="card cyber-card p-6 md:p-8 space-y-4">
+          <h2 class="font-heading text-xl font-bold uppercase text-black">Stages</h2>
+          <ol id="stage-list" class="stages space-y-2 text-xs font-bold uppercase tracking-wider text-black/80 list-decimal list-inside"></ol>
+        </div>
+
+        <div class="card cyber-card p-6 md:p-8 space-y-4">
+          <h2 class="font-heading text-xl font-bold uppercase text-black">Logs</h2>
+          <p id="heartbeat" class="hint text-xs font-semibold text-black/50" style="display:none"></p>
+          <pre id="log-view" class="log bg-black/90 text-neon-lime p-4 rounded-xl text-xs font-mono overflow-x-auto min-h-[160px] max-h-[300px]"></pre>
+        </div>
+      </section>
+
+      <section id="history" class="panel">
+        <div class="card cyber-card p-6 md:p-8 space-y-4">
+          <h2 class="font-heading text-xl font-bold uppercase text-black">Processed clips</h2>
+          <div class="overflow-x-auto">
+            <table id="history-table" class="w-full text-left text-xs font-bold uppercase">
+              <thead>
+                <tr class="border-b border-black/10 text-black/60">
+                  <th class="pb-3">Title</th>
+                  <th class="pb-3">Source</th>
+                  <th class="pb-3">Score</th>
+                  <th class="pb-3">Status</th>
+                  <th class="pb-3">Created</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-black/5 text-black"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="bottom-bar border-t border-black/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="play-video flex items-center gap-3 cursor-pointer group" onclick="alert('🎬 Playing the trailer...')">
+        <div class="icon w-8 h-8 rounded-full bg-neon-lime flex items-center justify-center text-black font-bold text-xs group-hover:scale-110 transition-transform">▶</div>
+        <span class="text-xs font-bold uppercase tracking-widest text-black">PLAY VIDEO</span>
+      </div>
+      
+      <div class="bottom-tags flex items-center gap-8 text-[10px] font-bold uppercase tracking-widest text-black/60">
+        <span>ARTISTS</span>
+        <span>ARTWORK</span>
+        <span>AUCTION</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
