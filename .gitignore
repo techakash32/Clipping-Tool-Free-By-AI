@@ -91,7 +91,6 @@ htmlcov/
 
 # Keep example configuration
 !.env.example
-@"
 
 # AI model cache
 .hfcache/
@@ -109,8 +108,10 @@ clips/
 *.mov
 *.mkv
 *.webm
-"@ | Add-Content .gitignore
 # Google OAuth credentials
 client_secret.json
 credentials.json
 .env
+
+# YouTube OAuth token (never commit)
+youtube_token.json
