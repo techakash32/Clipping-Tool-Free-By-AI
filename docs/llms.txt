@@ -1,0 +1,16 @@
+# Clipping Tool Free By AI
+
+> Free, open-source AI clipping tool (also called Podcast Shorts Factory / NUO). Ten cooperating AI agents turn long YouTube videos, including GTA 6 (GTA VI) content and podcasts, into vertical 9:16 Shorts and can post them to YouTube Shorts. MIT licensed, Python, FastAPI, ffmpeg, faster-whisper.
+
+## Key facts
+- Cost: free; defaults to free AI providers (OpenRouter, Groq, Gemini, Ollama)
+- Platforms: YouTube Shorts automated; TikTok and Reels exported for manual posting
+- Runs on Windows, macOS, Linux; Python 3.11+ and ffmpeg required
+- Interfaces: command line (factory auto <url>) and web dashboard (python webapp/server.py, port 8787)
+
+## Links
+- [Repository](https://github.com/techakash32/Clipping-Tool-Free-By-AI)
+- [README](https://github.com/techakash32/Clipping-Tool-Free-By-AI/blob/main/README.md)
+- [Quick start](https://github.com/techakash32/Clipping-Tool-Free-By-AI/blob/main/QUICKSTART.md)
+- [YouTube setup](https://github.com/techakash32/Clipping-Tool-Free-By-AI/blob/main/docs/youtube-setup.md)
+- [Website](https://techakash32.github.io/Clipping-Tool-Free-By-AI/)

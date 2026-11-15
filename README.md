@@ -18,6 +18,8 @@
 
 </div>
 
+**🌐 Website:** https://techakash32.github.io/Clipping-Tool-Free-By-AI/ · **📚 Docs:** [QUICKSTART](QUICKSTART.md) · [YouTube setup](docs/youtube-setup.md)
+
 ---
 
 ## ⚡ TL;DR (Quick Answer)

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://techakash32.github.io/Clipping-Tool-Free-By-AI/sitemap.xml

@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Clipping Tool Free By AI"
+abstract: "Free open-source AI clipping tool that turns long YouTube videos, including GTA 6 content and podcasts, into vertical Shorts using ten cooperating AI agents."
+authors:
+  - alias: "techakash32"
+repository-code: "https://github.com/techakash32/Clipping-Tool-Free-By-AI"
+url: "https://techakash32.github.io/Clipping-Tool-Free-By-AI/"
+license: MIT
+keywords: [ai-clipping, youtube-shorts, gta6, video-automation, multi-agent]
+date-released: 2026-11-16
