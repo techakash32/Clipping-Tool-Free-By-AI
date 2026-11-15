@@ -13,3 +13,19 @@ Helping the algorithm and search understand and route the clip.
 - **Trend-jacking:** if a relevant trending sound/topic fits honestly, ride it — but never at
   the cost of the clip's clarity.
 - **Consistency of niche** trains the algorithm on who to show you to. Don't whiplash topics.
+
+## GTA 6 / GTA VI niche pack
+
+When the clip is about GTA 6, keep the 3–6 tag rule: one broad, one medium, one specific.
+
+- **Broad:** #GTA6 or #GTAVI (use one, not both, unless the title is about the name itself)
+- **Medium:** #GTA6Trailer #GTA6Gameplay #GTA6News #GTA6Leaks #GTA6Theory #GamingNews
+- **Specific to the clip:** #ViceCity #LeonidaFlorida #Lucia #Jason #GTA6Map #GTA6Story #RockstarGames
+- **Platform:** always add #Shorts on YouTube Shorts.
+- **Keywords in the title and first spoken line:** "GTA 6", "GTA VI", the character or location name,
+  and the specific detail (e.g. "GTA 6 trailer detail", "GTA 6 map size").
+- **Ready sets:**
+  - `#GTA6 #GTA6Trailer #ViceCity #RockstarGames #Shorts`
+  - `#GTAVI #GTA6Leaks #GTA6News #GamingNews #Shorts`
+  - `#GTA6 #GTA6Theory #Lucia #Jason #Shorts`
+- Never claim a leak is confirmed unless the source says so. Don't use Rockstar branding as if the channel is official.

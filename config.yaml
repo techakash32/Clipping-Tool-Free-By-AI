@@ -197,12 +197,12 @@ compiler:
 # playbook so the whole team learns. Can never touch editorial-standards.
 trainer:
   enabled: true
-  study_queries: ["podcast clips viral", "joe rogan clips", "business health podcast shorts"]
+  study_queries: ["GTA 6 shorts", "GTA 6 trailer clips", "podcast clips viral"]
   playbooks: [hooks, pacing, captions-craft, video-editing, titles-thumbnails, growth-strategy, youtube-monetization, thumbnail-design]
 
 trend_scout:
   enabled: true
-  niche: "viral podcast clips — money, business, health, mindset, comedy"   # set this to YOUR channel's niche
+  niche: "GTA 6 (GTA VI) clips — trailer breakdowns, news, leaks, theories, gameplay moments; plus viral podcast clips"   # set this to YOUR channel's niche
   trends_file: "trends.md"
 
 # Scheduled runs pull the newest DOWNLOADABLE (skips members-only/unavailable) video
@@ -215,6 +215,8 @@ scheduler:
     # allow clipping, or your own content. Two popular examples to replace:
     - "https://www.youtube.com/@joerogan/videos"
     - "https://www.youtube.com/@TheDiaryOfACEO/videos"
+    # GTA 6 sources: add channels/playlists that ALLOW clipping (or your own uploads), e.g.
+    # - "https://www.youtube.com/@YOUR_GTA6_CHANNEL/videos"
   source_url: ""               # legacy single-source fallback (used if sources is empty)
 
 # How the agents talk to YOU: everything important lands in activity.md
